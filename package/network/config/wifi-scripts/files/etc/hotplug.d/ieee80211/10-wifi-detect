@@ -1,5 +1,9 @@
 #!/bin/sh
 
-[ "${ACTION}" = "add" ] && {
+if [ ! -f "/etc/pcat-wlan-init-completed" ]; then
+	exit 0
+fi
+
+[ "${ACTION}" = "add" ] && {\
 	/sbin/wifi config
 }

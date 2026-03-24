@@ -2,12 +2,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=pcat-manager
 PKG_VERSION:=2.0.0
-PKG_RELEASE:=31
+PKG_RELEASE:=46
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/photonicat/rockchip_rk3568_pcat_manager
-PKG_SOURCE_DATE:=2025-09-18
-PKG_SOURCE_VERSION:=7f05f163ac864ce323ad648a4c03047915fce496
+PKG_SOURCE_DATE:=2026-03-20
+PKG_SOURCE_VERSION:=961edb8b5cbae63efb03ee774d198f6fdb682a45
 
 PKG_LICENSE:=GPL-3.0
 PKG_LICENSE_FILES:=LICENSE
@@ -41,6 +41,11 @@ define Package/pcat-manager/install
 	$(INSTALL_BIN) \
 		$(PKG_INSTALL_DIR)/usr/bin/pcat-pmu-updater \
 		$(1)/usr/bin/pcat-pmu-updater
+
+	$(INSTALL_BIN) \
+		$(PKG_BUILD_DIR)/src/fm350-mm.py \
+		$(1)/usr/bin/fm350-mm.py
+
 
 	$(INSTALL_DIR) $(1)/etc
 

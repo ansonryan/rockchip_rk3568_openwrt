@@ -46,7 +46,8 @@ define KernelPackage/drm-rockchip
 	$(LINUX_DIR)/drivers/gpu/drm/panel/panel-simple.ko \
 	$(LINUX_DIR)/drivers/gpu/drm/rockchip/rockchipdrm.ko \
 	$(LINUX_DIR)/drivers/media/cec/core/cec.ko \
-	$(LINUX_DIR)/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.ko@ge6.12
+	$(LINUX_DIR)/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.ko@ge6.12 \
+	$(LINUX_DIR)/drivers/gpu/drm/display/drm_dp_aux_bus.ko@ge6.12
   AUTOLOAD:=$(call AutoProbe,dw-hdmi-cec phy-rockchip-inno-hdmi dw-hdmi-qp rockchipdrm,1)
 endef
 

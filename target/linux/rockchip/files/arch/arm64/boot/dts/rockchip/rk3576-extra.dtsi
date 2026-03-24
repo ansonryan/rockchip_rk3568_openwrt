@@ -104,3 +104,11 @@
 	};
 };
 
+/ {
+	cpuinfo { 
+		compatible = "rockchip,cpuinfo";
+		nvmem-cells = <&otp_id>, <&otp_cpu_version>, <&cpu_code>;
+		nvmem-cell-names = "id", "cpu-version", "cpu-code";
+	};
+
+};

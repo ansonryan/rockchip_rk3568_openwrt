@@ -37,11 +37,11 @@ Photonicat 2，在原有基础上进行了多方面的增强与升级：
 
 1. **不要用 root 用户进行编译**
 2. 国内用户编译前最好准备好梯子
-3. 默认登陆IP 192.168.1.1 密码 password
+3. 默认登录IP 172.16.0.1 密码 photonicat
 
 ## 编译命令
 
-1. 首先装好 Linux 系统，推荐 Debian 或 Ubuntu LTS
+1. 首先装好 Linux 系统，推荐 Debian 13或 Ubuntu 24.04 LTS
 
 2. 安装编译依赖
 
