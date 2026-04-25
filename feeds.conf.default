@@ -3,3 +3,4 @@ src-git luci https://github.com/photonicat/rockchip_rk3568_openwrt_luci.git;open
 src-git routing https://github.com/photonicat/rockchip_rk3568_openwrt_routing.git;master
 src-git telephony https://github.com/photonicat/rockchip_rk3568_openwrt_telephony.git;master
 src-git video https://github.com/photonicat/rockchip_rk3568_openwrt_video.git;master
+src-git pcat_addons https://github.com/photonicat/rockchip_rk3568_pcat_manager.git;master
