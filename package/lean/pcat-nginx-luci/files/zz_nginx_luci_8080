@@ -1,0 +1,54 @@
+#!/bin/sh
+# Configures nginx to serve LuCI on port 8080.
+# Port 80 is left for pcat-manager-web.
+[ -x /etc/init.d/nginx ] && /etc/init.d/nginx stop 2>/dev/null
+[ -x /etc/init.d/uwsgi ] && /etc/init.d/uwsgi stop 2>/dev/null
+killall nginx uwsgi 2>/dev/null
+[ -x /etc/init.d/uhttpd ] && /etc/init.d/uhttpd disable 2>/dev/null
+killall uhttpd 2>/dev/null
+cat > /etc/config/nginx << "NGINXCONF"
+config main "global"
+	option uci_enable "false"
+config server "_lan"
+	list listen "0.0.0.0:8080"
+	list listen "[::]:8080"
+	option server_name "_lan"
+	list include "restrict_locally"
+	list include "conf.d/luci.locations"
+NGINXCONF
+cat > /etc/nginx/conf.d/luci-8080.conf << "NGINX8080"
+server {
+    listen 8080;
+    listen [::]:8080;
+    server_name _;
+    root /www;
+    index index.html;
+    location /cgi-bin/luci {
+        include uwsgi_params;
+        uwsgi_param SERVER_ADDR $server_addr;
+        uwsgi_modifier1 9;
+        uwsgi_pass unix:////var/run/luci-webui.socket;
+    }
+    location ~ /cgi-bin/cgi-(backup|download|upload|exec) {
+        include uwsgi_params;
+        uwsgi_param SERVER_ADDR $server_addr;
+        uwsgi_modifier1 9;
+        uwsgi_pass unix:////var/run/luci-cgi_io.socket;
+    }
+    location /ubus {
+        include uwsgi_params;
+        uwsgi_param SERVER_ADDR $server_addr;
+        uwsgi_modifier1 9;
+        uwsgi_pass unix:////var/run/ubus/ubus.sock;
+    }
+    location /luci-static {
+        error_log stderr crit;
+    }
+}
+NGINX8080
+[ -L /etc/uwsgi/luci.ini ] || ln -sf /usr/share/uwsgi/luci.ini /etc/uwsgi/luci.ini 2>/dev/null
+[ -x /etc/init.d/nginx ] && /etc/init.d/nginx enable
+[ -x /etc/init.d/nginx ] && /etc/init.d/nginx start
+[ -x /etc/init.d/uwsgi ] && /etc/init.d/uwsgi enable
+[ -x /etc/init.d/uwsgi ] && /etc/init.d/uwsgi start
+exit 0
